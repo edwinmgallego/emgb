@@ -1,32 +1,21 @@
-// contact.js
+// Inicia EmailJS
+(function () {
+  emailjs.init("R5t_kEJnz9W_cdIUe"); // Sustituye con tu User ID de EmailJS
+})();
 
+// Captura el formulario y agrega el evento de envío
 document
   .getElementById("contact-form")
   .addEventListener("submit", function (event) {
-    event.preventDefault();
+    event.preventDefault(); // Evita el comportamiento por defecto del formulario
 
-    // Variables del formulario
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const message = document.getElementById("message").value;
-
-    // Usa EmailJS para enviar el formulario
-    emailjs.init("R5t_kEJnz9W_cdIUe"); // Reemplaza con tu userID de EmailJS
-
-    emailjs
-      .send("default_service", "template_tx67guk", {
-        from_name: name,
-        from_email: email,
-        message: message,
-      })
-      .then(
-        function (response) {
-          alert("Mensaje enviado con éxito!");
-          console.log("SUCCESS", response.status, response.text);
-        },
-        function (error) {
-          alert("Hubo un problema al enviar el mensaje, intenta nuevamente.");
-          console.log("FAILED", error);
-        }
-      );
+    // Envia el formulario a través de EmailJS
+    emailjs.sendForm("default_service", "template_tx67guk", this).then(
+      function (response) {
+        alert("¡Mensaje enviado con éxito!", response);
+      },
+      function (error) {
+        alert("Hubo un error al enviar el mensaje.", error);
+      }
+    );
   });
