@@ -1,32 +1,20 @@
-// contact.js
+const btn = document.getElementById('button');
 
-document
-  .getElementById("contact-form")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
+document.getElementById('form')
+ .addEventListener('submit', function(event) {
+   event.preventDefault();
 
-    // Variables del formulario
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const message = document.getElementById("message").value;
+   btn.value = 'Sending...';
 
-    // Usa EmailJS para enviar el formulario
-    emailjs.init("R5t_kEJnz9W_cdIUe"); // Reemplaza con tu userID de EmailJS
+   const serviceID = 'default_service';
+   const templateID = 'template_tx67guk';
 
-    emailjs
-      .send("service_ikjnndm", "template_12qulwd", {
-        from_name: name,
-        from_email: email,
-        message: message,
-      })
-      .then(
-        function (response) {
-          alert("Mensaje enviado con éxito!");
-          console.log("SUCCESS", response.status, response.text);
-        },
-        function (error) {
-          alert("Hubo un problema al enviar el mensaje, intenta nuevamente.");
-          console.log("FAILED", error);
-        }
-      );
-  });
+   emailjs.sendForm(serviceID, templateID, this)
+    .then(() => {
+      btn.value = 'Send Email';
+      alert('Sent!');
+    }, (err) => {
+      btn.value = 'Send Email';
+      alert(JSON.stringify(err));
+    });
+});
